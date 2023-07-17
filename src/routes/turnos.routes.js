@@ -6,6 +6,7 @@ import {
     obtenerTurno, 
     obtenerTurnos }
      from "../controllers/turnos.controllers";
+import { validacionTurno } from "../helpers/validacionTurnos";
 
 const turnosRuta = Router();
 
