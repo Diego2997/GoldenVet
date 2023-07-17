@@ -4,7 +4,7 @@ import cors from 'cors'
 import path from 'path'
 import 'dotenv/config'
 import './src/database/dbConnetion'
-
+import servicioRouter from "./src/routes/servicios.routes"
 
 const app = express()
 
@@ -15,6 +15,6 @@ app.listen(app.get("port"),()=>{
 app.use(cors())
 app.use(express.json())
 app.use(morgan("dev"))
-
 app.use(express.static(path.join(__dirname,"/public")))
 
+app.use("/apiveterinaria",servicioRouter)
