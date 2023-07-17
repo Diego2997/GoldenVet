@@ -16,5 +16,7 @@ app.use(cors())
 app.use(express.json())
 app.use(morgan("dev"))
 
+app.use('/apiveterinaria',comentariosRouter)
+
 app.use(express.static(path.join(__dirname,"/public")))
 
