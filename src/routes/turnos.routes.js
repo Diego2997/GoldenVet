@@ -11,9 +11,9 @@ const turnosRuta = Router();
 
 turnosRuta.route('/turnos')
     .get(obtenerTurnos)
-    .post(ingresarTurno);
+    .post(validacionTurno,ingresarTurno);
 
 turnosRuta.route('/turnos/:id')
     .get(obtenerTurno)
-    .put(modificarTurno)
+    .put(validacionTurno,modificarTurno)
     .delete(eliminarTurno);
