@@ -1,4 +1,5 @@
 import { check } from "express-validator";
+import resultadoValidacion from "./resultadoValidacion";
 
 export const validarComentario = [
   check("nombre")

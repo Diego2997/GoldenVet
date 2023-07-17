@@ -4,11 +4,12 @@ import {
   crearComentario,
   obtenerComentarios,
 } from "../controllers/comentarios.controllers";
+import { validarComentario } from "../helpers/validarComentario";
 
 const router = Router();
 
 router.get("/comentarios", obtenerComentarios);
-router.post("/comentarios", crearComentario);
+router.post("/comentarios",validarComentario, crearComentario);
 router.delete("/comentarios/:id", borrarComentario);
 
 export default router;
