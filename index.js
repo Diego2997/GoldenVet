@@ -6,6 +6,7 @@ import 'dotenv/config'
 import './src/database/dbConnetion'
 import pacientesRouter from './src/routes/pacientes.routes.js';
 import servicioRouter from "./src/routes/servicios.routes"
+import turnosRuta from './src/routes/turnos.routes'
 
 const app = express()
 
@@ -21,3 +22,5 @@ app.use('/apiveterinaria', pacientesRouter)
 app.use(express.static(path.join(__dirname,"/public")))
 
 app.use("/apiveterinaria",servicioRouter)
+
+app.use("/apiveterinaria",turnosRuta)

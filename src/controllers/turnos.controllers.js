@@ -12,7 +12,7 @@ export const obtenerTurnos = async (req, res) => {
 
 export const ingresarTurno = async (req, res) => {
     try {
-        const NuevoTurno = new Turno(req);
+        const NuevoTurno = new Turno(req.body);
         await NuevoTurno.save();
         res.status(201).json({mensaje: 'Se logro agregar correctamente el turno'});
     } catch (error) {

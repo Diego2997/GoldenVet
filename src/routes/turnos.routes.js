@@ -18,3 +18,5 @@ turnosRuta.route('/turnos/:id')
     .get(obtenerTurno)
     .put(validacionTurno,modificarTurno)
     .delete(eliminarTurno);
+
+export default turnosRuta;
