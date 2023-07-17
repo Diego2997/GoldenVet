@@ -30,6 +30,34 @@ const pacienteSchema = new Schema({
         minLength: 5,
         maxLength: 50,
     },
+    mascota: {
+        nombre: {
+            type: String,
+            minLength: 2,
+            maxLength: 50,
+            required: true,
+        },
+        especie: {
+            type: String,
+            minLength: 2,
+            maxLength: 50,
+            required: true,
+        },
+        raza: {
+            type: String,
+            minLength: 2,
+            maxLength: 50,
+            required: true,
+        },
+        historialMedico: {
+            type: [String], 
+            validate: {
+                validator: function (array) {
+                    return array.every((item) => typeof item === 'string');
+                },
+            },
+        },
+    },
 });
 
 const Paciente = model("paciente", pacienteSchema);
