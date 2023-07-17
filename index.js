@@ -5,7 +5,7 @@ import path from 'path'
 import 'dotenv/config'
 import './src/database/dbConnetion'
 import pacientesRouter from './src/routes/pacientes.routes.js';
-
+import servicioRouter from "./src/routes/servicios.routes"
 
 const app = express()
 
@@ -16,8 +16,8 @@ app.listen(app.get("port"),()=>{
 app.use(cors())
 app.use(express.json())
 app.use(morgan("dev"))
-
 app.use('/apiveterinaria', pacientesRouter)
 
 app.use(express.static(path.join(__dirname,"/public")))
 
+app.use("/apiveterinaria",servicioRouter)
