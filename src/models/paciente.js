@@ -22,7 +22,7 @@ const pacienteSchema = new Schema({
     },
     telefono: {
         type: String,
-        minLength: 10,
+        minLength: 7,
         maxLength: 10,
     },
     direccion: {
