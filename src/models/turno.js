@@ -29,4 +29,4 @@ const turnoSchema = new Schema({
 
 const Turno = model('turno', turnoSchema);
 
-export default
+export default Turno;
