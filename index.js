@@ -4,6 +4,7 @@ import cors from 'cors'
 import path from 'path'
 import 'dotenv/config'
 import './src/database/dbConnetion'
+import comentariosRouter from './src/routes/comentarios.routes'
 
 
 const app = express()
