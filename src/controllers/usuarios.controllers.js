@@ -54,15 +54,15 @@ export const editarUsuario = async (req, res) => {
 };
 
 export const eliminarUsuario = async (req, res) => {
-    try{
-        await Usuario.findByIdAndDelete(req.params.id);
-        res.status(200).json({
-            mensaje: "El usuario se eliminó correctamente."
-        });
-    }catch(error){
-        console.log(error)
-        res.status(404).json({
-            mensaje: "Error al eliminar usuario."
-        });
-    }
-}
+  try {
+    await Usuario.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      mensaje: "El usuario se eliminó correctamente.",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      mensaje: "Error al eliminar usuario.",
+    });
+  }
+};
