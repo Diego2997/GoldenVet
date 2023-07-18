@@ -26,7 +26,7 @@ const validarUSuario = [
   check("rol")
     .default("usuario")
     .isIn(["administrador", "usuario", "veterinario", "paciente"])
-    .withMessage("El rol no existe"),
+    .withMessage("El rol no existe."),
   (req, res, next) => {
     resultadoValidacion(req, res, next);
   },
