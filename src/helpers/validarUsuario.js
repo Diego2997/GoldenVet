@@ -20,14 +20,13 @@ const validarUSuario = [
     .notEmpty()
     .withMessage("El correo electrónico es obligatorio.")
     .matches(/\S+@\S+\.\S+/)
-    .withMessage("El correo electrónico debe tener este formato ejemplo@mail.com"),
-  check("rol")
-    .notEmpty()
-    .withMessage("El obligatorio completar el campo Rol.")
-    .isIn(["administrador", "usuario", "veterinario", "paciente"])
     .withMessage(
-      "La categoría debe ser una de las siguientes opciones [administrador, usuario, veterinario o paciente]"
+      "El correo electrónico debe tener este formato ejemplo@mail.com"
     ),
+  check("rol")
+    .default("usuario")
+    .isIn(["administrador", "usuario", "veterinario", "paciente"])
+    .withMessage("El rol no existe"),
   (req, res, next) => {
     resultadoValidacion(req, res, next);
   },
