@@ -4,6 +4,7 @@ import cors from 'cors'
 import path from 'path'
 import 'dotenv/config'
 import './src/database/dbConnetion'
+import comentariosRouter from './src/routes/comentarios.routes'
 import pacientesRouter from './src/routes/pacientes.routes.js';
 import servicioRouter from "./src/routes/servicios.routes"
 
@@ -17,6 +18,8 @@ app.use(cors())
 app.use(express.json())
 app.use(morgan("dev"))
 app.use('/apiveterinaria', pacientesRouter)
+
+app.use('/apiveterinaria',comentariosRouter)
 
 app.use(express.static(path.join(__dirname,"/public")))
 
