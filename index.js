@@ -7,6 +7,7 @@ import './src/database/dbConnetion'
 import comentariosRouter from './src/routes/comentarios.routes'
 import pacientesRouter from './src/routes/pacientes.routes.js';
 import servicioRouter from "./src/routes/servicios.routes"
+import turnosRuta from './src/routes/turnos.routes'
 
 const app = express()
 
@@ -24,3 +25,5 @@ app.use('/apiveterinaria',comentariosRouter)
 app.use(express.static(path.join(__dirname,"/public")))
 
 app.use("/apiveterinaria",servicioRouter)
+
+app.use("/apiveterinaria",turnosRuta)
