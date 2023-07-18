@@ -29,12 +29,26 @@ export const crearUsuario = async (req, res) => {
     const usuarioNuevo = new Usuario(req.body);
     await usuarioNuevo.save();
     res.status(201).json({
-        mensaje: "El usuario fué creado."
-    })
+      mensaje: "El usuario fué creado.",
+    });
   } catch (error) {
     console.log(error);
     res.status(404).json({
       mensaje: "Error al crear usuario.",
+    });
+  }
+};
+
+export const editarUsuario = async (req, res) => {
+  try {
+    await Usuario.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({
+      mensaje: "El usuario se actualizó correctamente",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      mensaje: "Error al actualizar el usuario",
     });
   }
 };
