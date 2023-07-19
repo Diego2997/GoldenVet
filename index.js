@@ -9,6 +9,7 @@ import pacientesRouter from './src/routes/pacientes.routes.js';
 import servicioRouter from "./src/routes/servicios.routes"
 import turnosRuta from './src/routes/turnos.routes'
 import usuariosRouter from "./src/routes/usuarios.routes";
+import productosRouter from "./src/routes/productos.routes";
 
 const app = express();
 
@@ -31,3 +32,4 @@ app.use("/apiveterinaria",servicioRouter)
 
 app.use("/apiveterinaria",turnosRuta)
 
+app.use("/apiveterinaria", productosRouter)

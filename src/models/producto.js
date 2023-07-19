@@ -31,5 +31,5 @@ const productoSchema = new Schema({
   },
 });
 
-const Producto = model("paciente", productoSchema);
+const Producto = model("producto", productoSchema);
 export default Producto;
