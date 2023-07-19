@@ -26,6 +26,8 @@ export const validacionTurno = [
     check("fechaYHora")
         .notEmpty()
         .withMessage("La fecha y la hora es obligatoria")
+        .matches(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s([0-1][0-9]|2[0-3]):(00|30)$/)
+        .withMessage("La fecha y hora deben tener el siguiente formato: dd/mm/yyyy hh:00 o dd-mm-yyyy hh:30")
         .custom((value) => {
             const parsedDate = new Date(value);
             if (isNaN(parsedDate.getTime())) {
