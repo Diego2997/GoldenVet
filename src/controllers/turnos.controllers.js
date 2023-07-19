@@ -10,16 +10,25 @@ export const obtenerTurnos = async (req, res) => {
     }
 };
 
-export const ingresarTurno = async (req, res) => {
+export const crearTurno = async (req, res) => {
     try {
-        const NuevoTurno = new Turno(req.body);
-        await NuevoTurno.save();
-        res.status(201).json({mensaje: 'Se logro agregar correctamente el turno'});
+        const { fechaYHora } = req.body;
+
+        const turnosMismoHorario = await Turno.find({fechaYHora});
+
+        if (turnosMismoHorario.length >= 2) {
+            return res.status(400).json({ mensaje: "Ya hay dos turnos reservados en el mismo horario" });
+        }
+
+        const nuevoTurno = new Turno(req.body);
+
+        await nuevoTurno.save();
+        res.status(201).json({ mensaje: "Turno creado exitosamente", turno: nuevoTurno });
     } catch (error) {
-        console.log(error);
-        res.status(404).json({mensaje: 'Error al poder cargar el nuevo turno'});
+         console.log(error);
+        res.status(500).json({ mensaje: "Error al crear el turno" });
     }
-};
+  };
 
 export const obtenerTurno = async (req, res) => {
     try {
@@ -44,6 +53,7 @@ export const modificarTurno = async (req, res) => {
 export const eliminarTurno = async (req, res) => {
     try {
         await Turno.findByIdAndDelete(req.params.id);
+
         res.status(200).json({mensaje: 'Se logro eliminar el turno'});
     } catch (error) {
         console.log(error);
