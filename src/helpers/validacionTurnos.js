@@ -26,9 +26,28 @@ export const validacionTurno = [
     check("fechaYHora")
         .notEmpty()
         .withMessage("La fecha y la hora es obligatoria")
-        .isLength({min: 14, max: 20})
-        .withMessage("La fecha debe de contener entre 14 y 20 caracteres")
-        .matches(/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})(\s)([0-1][0-9]|2[0-3])(:)([0-5][0-9])$/)
-        .withMessage("La fecha y hora debe de tener el siguiente formato: dd/mm/yyyy hh:mm o dd-mm-yyyy hh:mm"),
+        .custom((value) => {
+            const parsedDate = new Date(value);
+            if (isNaN(parsedDate.getTime())) {
+              throw new Error("La fecha y hora deben ser una fecha válida");
+            }
+            return true;
+        })
+        .custom((value) => {
+            const fechaHora = new Date(value);
+            const hora = fechaHora.getHours();
+            if (hora < 8 || hora > 20) {
+              throw new Error("El turno debe estar en el rango de 8 a 20 horas");
+            }
+            return true;
+        })
+        .custom(async (value, { req }) => {
+            const fechaCreacion = new Date();
+            const fechaHora = new Date(value);
+            if (fechaHora < fechaCreacion) {
+              throw new Error("No se puede crear un turno anterior a la fecha de creación");
+            }
+            return true;
+        }),
     (req,res,next)=>{resultadoValidacion(req,res,next)}
 ];
