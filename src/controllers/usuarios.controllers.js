@@ -27,8 +27,18 @@ export const obtenerUsuario = async (req, res) => {
 export const crearUsuario = async (req, res) => {
   try {
     const usuarioExistente = await Usuario.findOne({ nombreUsuario: req.body.nombreUsuario });
-    if (usuarioExistente){
-      return res.status(400).json({ mensaje: "Este nombre de usuario ya está en uso. "});
+    const emailExistente = await Usuario.findOne({ email: req.body.email });
+    if (usuarioExistente || emailExistente) {
+      let resumenErrores = "";
+
+      if (usuarioExistente) {
+        resumenErrores += "Este nombre de usuario ya está en uso. ";
+      }
+      if (emailExistente) {
+        resumenErrores += "Este correo electrónico ya está en uso.";
+      }
+
+      return res.status(400).json({ mensaje: resumenErrores });
     } else {
     const usuarioNuevo = new Usuario(req.body)
     await usuarioNuevo.save();
