@@ -5,25 +5,25 @@ const turnoSchema = new Schema({
         type: String,
         minLength: 5,
         maxLength: 150,
-        require: true,
+        required: true,
     },
     veterinario:{
         type: String,
         minLength: 3,
         maxLength: 50,
-        require: true,
+        required: true,
     },
     paciente:{
         type: String,
         minLength: 2,
         maxLength: 50,
-        require: true,
+        required: true,
     },
     fechaYHora:{
         type: String,
         minLength: 14,
         maxLength: 20,
-        require: true,
+        required: true,
     }
 });
 
