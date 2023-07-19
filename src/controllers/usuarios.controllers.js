@@ -49,13 +49,29 @@ export const crearUsuario = async (req, res) => {
 
 export const editarUsuario = async (req, res) => {
   try {
+    const usuarioExistente = await Usuario.findById(req.params.id);
+    if (!usuarioExistente) {
+      return res.status(404).json({
+        mensaje: "Usuario no encontrado.",
+      });
+    }
+
     const nombreUsuario = req.body.nombreUsuario;
     const email = req.body.email;
 
     const errores = await validarExistenciaUsuarioEmail(nombreUsuario, email);
     if (errores) {
-      return res.status(400).json({ mensaje: errores });
-    
+      if (
+        usuarioExistente.nombreUsuario === nombreUsuario &&
+        usuarioExistente.email === email
+      ) {
+        await Usuario.findByIdAndUpdate(req.params.id, req.body);
+        return res.status(200).json({
+          mensaje: "El usuario se actualizó correctamente.",
+        });
+      } else {
+        return res.status(400).json({ mensaje: errores });
+      }
     } else {
       await Usuario.findByIdAndUpdate(req.params.id, req.body);
       res.status(200).json({
