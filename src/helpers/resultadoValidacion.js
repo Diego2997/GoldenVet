@@ -11,6 +11,3 @@ const resultadoValidacion = (req, res, next)=>{
 }
 
 export default resultadoValidacion;
-
-
-
