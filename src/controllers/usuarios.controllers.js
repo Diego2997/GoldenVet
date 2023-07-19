@@ -26,7 +26,9 @@ export const obtenerUsuario = async (req, res) => {
 
 export const crearUsuario = async (req, res) => {
   try {
-    const usuarioExistente = await Usuario.findOne({ nombreUsuario: req.body.nombreUsuario });
+    const usuarioExistente = await Usuario.findOne({
+      nombreUsuario: req.body.nombreUsuario,
+    });
     const emailExistente = await Usuario.findOne({ email: req.body.email });
     if (usuarioExistente || emailExistente) {
       let resumenErrores = "";
@@ -40,27 +42,43 @@ export const crearUsuario = async (req, res) => {
 
       return res.status(400).json({ mensaje: resumenErrores });
     } else {
-    const usuarioNuevo = new Usuario(req.body)
-    await usuarioNuevo.save();
-    res.status(201).json({
-      mensaje: "El usuario fué creado.",
-    });
-  }
+      const usuarioNuevo = new Usuario(req.body);
+      await usuarioNuevo.save();
+      res.status(201).json({
+        mensaje: "El usuario fué creado.",
+      });
+    }
   } catch (error) {
     console.log(error);
     res.status(404).json({
       mensaje: "Error al crear usuario.",
     });
   }
-
 };
 
 export const editarUsuario = async (req, res) => {
   try {
+    const usuarioExistente = await Usuario.findOne({
+      nombreUsuario: req.body.nombreUsuario,
+    });
+    const emailExistente = await Usuario.findOne({ email: req.body.email });
+    if (usuarioExistente || emailExistente) {
+      let resumenErrores = "";
+
+      if (usuarioExistente) {
+        resumenErrores += "Este nombre de usuario ya está en uso. ";
+      }
+      if (emailExistente) {
+        resumenErrores += "Este correo electrónico ya está en uso.";
+      }
+
+      return res.status(400).json({ mensaje: resumenErrores });
+    } else{
     await Usuario.findByIdAndUpdate(req.params.id, req.body);
     res.status(200).json({
       mensaje: "El usuario se actualizó correctamente.",
     });
+    }
   } catch (error) {
     console.log(error);
     res.status(404).json({
