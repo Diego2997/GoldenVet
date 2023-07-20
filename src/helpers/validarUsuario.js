@@ -5,11 +5,13 @@ const validarUSuario = [
   check("nombreUsuario")
     .notEmpty()
     .withMessage("El nombre del usuario es obligatorio.")
+    .trim()
     .isLength({ min: 2, max: 30 })
     .withMessage("El nombre del usuario debe tener entre 2 y 30 caracteres."),
   check("password")
     .notEmpty()
     .withMessage("La contraseña es obligatoria.")
+    .trim()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,}$/
     )
@@ -19,6 +21,7 @@ const validarUSuario = [
   check("email")
     .notEmpty()
     .withMessage("El correo electrónico es obligatorio.")
+    .trim()
     .isEmail()
     .withMessage("El email no es valido")
     .matches(/\S+@\S+\.\S+/)

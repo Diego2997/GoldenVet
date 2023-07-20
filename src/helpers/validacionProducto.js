@@ -5,16 +5,19 @@ const validarProducto = [
   check("nombreProducto")
     .notEmpty()
     .withMessage("El nombre del producto es obligatorio.")
+    .trim()
     .isLength({ min: 2, max: 100 })
     .withMessage("El nombre debe tener entre 2 y 100 caracteres"),
   check("descripcion")
     .notEmpty()
     .withMessage("La descripción del producto es obligatoria.")
+    .trim()
     .isLength({ min: 10, max: 600 })
     .withMessage("La descripción debe tener entre 10 y 600 caracteres"),
   check("precio")
     .notEmpty()
     .withMessage("El precio es obligatorio")
+    .trim()
     .isNumeric()
     .withMessage("El valor debe tener un formato numerico")
     .custom((value) => {
@@ -27,6 +30,7 @@ const validarProducto = [
   check("stock")
     .notEmpty()
     .withMessage("El stock es obligatorio")
+    .trim()
     .isNumeric()
     .withMessage("El valor debe tener un formato numerico")
     .custom((value) => {
@@ -39,6 +43,7 @@ const validarProducto = [
   check("imagen")
     .notEmpty()
     .withMessage("La imagen es obligatoria")
+    .trim()
     .matches(
       /^(https?:\/\/)?(?:www\.)?[\w-]+\.[\w.-]+(?:\/[\w-./?%&=]*)?\.(?:jpg|jpeg|png|gif|bmp|jpeg\?[\w=&.]*)$/
     )
