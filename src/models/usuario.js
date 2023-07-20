@@ -12,10 +12,9 @@ const usuarioSchema = new Schema({
     type: String,
     required: true,
     minLength: 8,
-    maxLength: 16,
     validate: {
       validator: function (value) {
-        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,16}$/.test(
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,}$/.test(
           value
         );
       },
