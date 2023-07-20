@@ -19,6 +19,8 @@ const validarUSuario = [
   check("email")
     .notEmpty()
     .withMessage("El correo electrónico es obligatorio.")
+    .isEmail()
+    .withMessage("El email no es valido")
     .matches(/\S+@\S+\.\S+/)
     .withMessage(
       "El correo electrónico debe tener este formato ejemplo@mail.com"
