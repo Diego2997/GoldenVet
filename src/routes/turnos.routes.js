@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { 
     eliminarTurno, 
-    ingresarTurno, 
+    crearTurno, 
     modificarTurno, 
     obtenerTurno, 
     obtenerTurnos }
@@ -12,7 +12,7 @@ const turnosRuta = Router();
 
 turnosRuta.route('/turnos')
     .get(obtenerTurnos)
-    .post(validacionTurno,ingresarTurno);
+    .post(validacionTurno,crearTurno);
 
 turnosRuta.route('/turnos/:id')
     .get(obtenerTurno)
