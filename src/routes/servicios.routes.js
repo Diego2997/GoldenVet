@@ -7,15 +7,15 @@ import {
   obtenerunServicio,
 } from "../controllers/servicios.controllers";
 import validarServicio from "../helpers/validarServicio";
-
+import validarJWT from "../helpers/verificarToken-jwt";
 
 const router = Router();
 
-router.route("/servicios").get(obtenerServicio).post(validarServicio,crearServicio);
+router.route("/servicios").get(obtenerServicio).post([validarJWT, validarServicio],crearServicio);
 router
   .route("/servicios/:id")
-  .delete(borrarServicio)
-  .put(validarServicio, editarServicio)
+  .delete(validarJWT, borrarServicio)
+  .put([validarJWT, validarServicio], editarServicio)
   .get(obtenerunServicio);
 
 export default router;

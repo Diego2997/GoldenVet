@@ -7,16 +7,17 @@ import {
     eliminarPaciente 
 } from "../controllers/pacientes.controllers";
 import validarPaciente from "../helpers/validarPaciente";
+import validarJWT from "../helpers/verificarToken-jwt";
 
 const router = Router();
 
 router.route('/pacientes')
     .get(obtenerPacientes)
-    .post(validarPaciente, crearPaciente);
+    .post([validarJWT, validarPaciente], crearPaciente);
     
 router.route('/pacientes/:id')
     .get(obtenerPaciente)
-    .put(validarPaciente, editarPaciente)
-    .delete(eliminarPaciente);
+    .put([validarJWT, validarPaciente], editarPaciente)
+    .delete(validarJWT, eliminarPaciente);
 
 export default router;
