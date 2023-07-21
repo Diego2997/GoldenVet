@@ -12,16 +12,6 @@ const usuarioSchema = new Schema({
     type: String,
     required: true,
     minLength: 8,
-    maxLength: 16,
-    validate: {
-      validator: function (value) {
-        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,16}$/.test(
-          value
-        );
-      },
-      message:
-        "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un carácter especial y un número. Además, la longitud máxima es de 16 caracteres.",
-    },
   },
   email: {
     type: String,

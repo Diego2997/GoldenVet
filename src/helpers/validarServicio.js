@@ -6,16 +6,19 @@ const validarServicio = [
   check("nombreServicio")
     .notEmpty()
     .withMessage("El nombre del servicio es obligatorio")
+    .trim()
     .isLength({ min: 2, max: 100 })
     .withMessage("El nombre del servicio tiene que tener entre 2 y 100 caracteres"),
   check("descripcion")
     .notEmpty()
     .withMessage("La descripcion del servicio es obligatoria")
+    .trim()
     .isLength({ min: 2, max: 600 })
     .withMessage("La descripcion del servicio tiene que tener entre 2 y 600 caracteres"),
   check("imagen")
     .notEmpty()
     .withMessage("La imagen debe ser obligatoria")
+    .trim()
     .matches(
       /^(https?:\/\/)?(?:www\.)?[\w-]+\.[\w.-]+(?:\/[\w-./?%&=]*)?\.(?:jpg|jpeg|png|gif|bmp|jpeg\?[\w=&.]*)$/
     )
