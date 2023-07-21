@@ -27,5 +27,13 @@ const comentarioSchema = new Schema(
   }
 );
 
+comentarioSchema.set('toJSON', {
+	transform: (documento, returnedObject) => {
+		returnedObject.id = returnedObject._id;
+		delete returnedObject._id;
+		delete returnedObject.__v;
+	},
+});
+
 const Comentario = model('comentario', comentarioSchema);
 export default Comentario;
