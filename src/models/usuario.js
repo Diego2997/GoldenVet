@@ -32,5 +32,13 @@ const usuarioSchema = new Schema({
   },
 });
 
+usuarioSchema.set('toJSON', {
+	transform: (documento, returnedObject) => {
+		returnedObject.id = returnedObject._id;
+		delete returnedObject._id;
+		delete returnedObject.__v;
+	},
+});
+
 const Usuario = model("usuario", usuarioSchema);
 export default Usuario;
