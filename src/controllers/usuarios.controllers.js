@@ -110,13 +110,13 @@ export const login = async(req, res) =>{
     let usuario = await Usuario.findOne({email});
     if(!usuario){
         return res.status(404).json({
-            mensaje: 'Correo o contraceña no validos'
+            mensaje: 'Correo o contraseña no validos'
         })
     }
     const passwordValido = bcrypt.compareSync(password, usuario.password)
     if(!passwordValido){
         return res.status(400).json({
-            mensaje: 'Correo o contraceña no validos'
+            mensaje: 'Correo o contraseña no validos'
         })
     }
     const token = await generarJWT(usuario.email, usuario.nombreUsuario);
@@ -124,7 +124,8 @@ export const login = async(req, res) =>{
         mensaje:'El usuario existe',
         nombreUsuario: usuario.nombreUsuario,
         email: usuario.email,
-        uid: usuario._id,
+        rol :usuario.rol,
+        uid: usuario.id,
         token
     })
 } catch (error) {
