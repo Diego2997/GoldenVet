@@ -7,16 +7,17 @@ import {
     obtenerTurnos }
      from "../controllers/turnos.controllers";
 import { validacionTurno } from "../helpers/validacionTurnos";
+import validarJWT from "../helpers/verificarToken-jwt";
 
 const turnosRuta = Router();
 
 turnosRuta.route('/turnos')
     .get(obtenerTurnos)
-    .post(validacionTurno,crearTurno);
+    .post([validarJWT, validacionTurno],crearTurno);
 
 turnosRuta.route('/turnos/:id')
     .get(obtenerTurno)
-    .put(validacionTurno,modificarTurno)
-    .delete(eliminarTurno);
+    .put([validarJWT, validacionTurno],modificarTurno)
+    .delete(validarJWT, eliminarTurno);
 
 export default turnosRuta;

@@ -1,3 +1,4 @@
+import generarJWT from "../helpers/firmaToken-jwt";
 import Usuario from "../models/usuario";
 import bcrypt from 'bcrypt'
 
@@ -102,6 +103,36 @@ export const eliminarUsuario = async (req, res) => {
     });
   }
 };
+
+export const login = async(req, res) =>{
+  try {
+    const {email, password} = req.body;
+    let usuario = await Usuario.findOne({email});
+    if(!usuario){
+        return res.status(404).json({
+            mensaje: 'Correo o contraseña no validos'
+        })
+    }
+    const passwordValido = bcrypt.compareSync(password, usuario.password)
+    if(!passwordValido){
+        return res.status(400).json({
+            mensaje: 'Correo o contraseña no validos'
+        })
+    }
+    const token = await generarJWT(usuario.email, usuario.nombreUsuario);
+    res.status(200).json({
+        mensaje:'Usuario logeado',
+        nombreUsuario: usuario.nombreUsuario,
+        email: usuario.email,
+        rol :usuario.rol,
+        uid: usuario.id,
+        token
+    })
+} catch (error) {
+    console.log(error)
+    res.status(404).json('Error al loguear un usuario');
+}
+}
 
 const validarExistenciaUsuarioEmail = async (nombreUsuario, email) => {
   const usuarioExistente = await Usuario.findOne({ nombreUsuario });
