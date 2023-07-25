@@ -5,6 +5,7 @@ import {
   obtenerUsuario,
   editarUsuario,
   eliminarUsuario,
+  login,
 } from "../controllers/usuarios.controllers";
 import validarUSuario from "../helpers/validarUsuario";
 import validarJWT from "../helpers/verificarToken-jwt";
@@ -21,4 +22,5 @@ router
   .put([validarJWT, validarUSuario], editarUsuario)
   .delete(validarJWT, eliminarUsuario);
 
+router.post('/', login);
 export default router;
