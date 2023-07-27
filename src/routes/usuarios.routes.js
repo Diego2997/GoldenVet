@@ -14,7 +14,7 @@ const router = Router();
 router
   .route("/usuarios")
   .get(obtenerUsuarios)
-  .post([validarJWT, validarUSuario], crearUsuario);
+  .post(validarUSuario, crearUsuario);
 
 router
   .route("/usuarios/:id")
