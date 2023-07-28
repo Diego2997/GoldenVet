@@ -26,3 +26,5 @@ const validarLogin = [
         resultadoValidacion(req, res, next);
     },
 ]
+
+export default validarLogin;
