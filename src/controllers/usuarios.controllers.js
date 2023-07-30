@@ -28,8 +28,14 @@ export const obtenerUsuario = async (req, res) => {
 
 export const crearUsuario = async (req, res) => {
   try {
-    const nombreUsuario = req.body.nombreUsuario;
-    const email = req.body.email;
+    const { nombreUsuario, email, rol } = req.body;
+    const esAdministrador = req.rol === 'administrador';
+
+    if ((!esAdministrador && rol === 'administrador')) {
+      return res.status(403).json({
+        mensaje: 'Acceso denegado. Solo los administradores pueden realizar esta acción.',
+      });
+    }
 
     const errores = await validarExistenciaUsuarioEmail(nombreUsuario, email);
     if (errores) {
@@ -43,6 +49,7 @@ export const crearUsuario = async (req, res) => {
         mensaje: "El usuario fué creado.",
       });
     }
+
   } catch (error) {
     console.log(error);
     res.status(404).json({
