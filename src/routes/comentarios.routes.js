@@ -12,6 +12,6 @@ const router = Router();
 
 router.get("/comentarios", obtenerComentarios);
 router.post("/comentarios", validarComentario, crearComentario);
-router.delete("/comentarios/:id", validarJWT, validarRolAdministrador, borrarComentario);
+router.delete("/comentarios/:id", [validarJWT, validarRolAdministrador], borrarComentario);
 
 export default router;

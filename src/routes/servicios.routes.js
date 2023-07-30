@@ -8,14 +8,18 @@ import {
 } from "../controllers/servicios.controllers";
 import validarServicio from "../helpers/validarServicio";
 import validarJWT from "../helpers/verificarToken-jwt";
+import { validarRolAdministrador } from "../helpers/validarRolAdministrador";
 
 const router = Router();
 
-router.route("/servicios").get(obtenerServicio).post([validarJWT, validarServicio],crearServicio);
+router.route("/servicios")
+  .get(obtenerServicio)
+  .post([validarJWT, validarRolAdministrador, validarServicio],crearServicio);
+
 router
   .route("/servicios/:id")
-  .delete(validarJWT, borrarServicio)
-  .put([validarJWT, validarServicio], editarServicio)
+  .delete([validarJWT, validarRolAdministrador], borrarServicio)
+  .put([validarJWT, validarRolAdministrador, validarServicio], editarServicio)
   .get(obtenerunServicio);
 
 export default router;
