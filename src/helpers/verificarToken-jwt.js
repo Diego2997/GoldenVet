@@ -10,6 +10,7 @@ const validarJWT = (req, res, next) => {
     try {
         const datos = jwt.verify(token, process.env.SECRET_JWT);
         req.id = datos.uid;
+        req.email = datos.email;
         req.nombreUsuario = datos.nombreUsuario;
         req.rol = datos.rol;
     } catch (error) {

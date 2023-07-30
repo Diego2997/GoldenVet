@@ -119,7 +119,7 @@ export const login = async(req, res) =>{
             mensaje: 'Correo o contraseña no validos'
         })
     }
-    const token = await generarJWT(usuario.email, usuario.nombreUsuario);
+    const token = await generarJWT(usuario.id, usuario.email, usuario.nombreUsuario, usuario.rol);
     res.status(200).json({
         mensaje:'Usuario logeado',
         nombreUsuario: usuario.nombreUsuario,
