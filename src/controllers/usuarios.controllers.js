@@ -67,8 +67,12 @@ export const editarUsuario = async (req, res) => {
       });
     }
 
-    const nombreUsuario = req.body.nombreUsuario;
-    const email = req.body.email;
+    const { nombreUsuario, email, password } = req.body;
+
+    if (password) {
+      const salt = bcrypt.genSaltSync();
+      req.body.password = bcrypt.hashSync(password, salt);
+    }
 
     const errores = await validarExistenciaUsuarioEmail(nombreUsuario, email);
     if (errores) {
