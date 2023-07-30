@@ -1,4 +1,4 @@
-const validarUsuarioPropio = (req, res, next) => {
+const validarUsuarioLogueado = (req, res, next) => {
     const usuarioId = req.params.id;
 
     if (req.rol === 'administrador') {
@@ -14,4 +14,4 @@ const validarUsuarioPropio = (req, res, next) => {
     next();
 };
 
-export { validarUsuarioPropio };
+export { validarUsuarioLogueado };
