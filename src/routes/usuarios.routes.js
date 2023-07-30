@@ -20,9 +20,9 @@ router
 
 router
   .route("/usuarios/:id")
-  .get(validarJWT, validarUsuarioLogueado,obtenerUsuario)
-  .put([validarJWT, validarUSuario], editarUsuario)
-  .delete(validarJWT, eliminarUsuario);
+  .get(validarJWT, validarUsuarioLogueado, obtenerUsuario)
+  .put(validarJWT, validarUsuarioLogueado, validarUSuario, editarUsuario)
+  .delete(validarJWT, validarUsuarioLogueado, eliminarUsuario);
 
 router.post('/', login);
 export default router;
