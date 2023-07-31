@@ -1,6 +1,11 @@
 import { Schema, model} from "mongoose";
 
 const turnoSchema = new Schema({
+    idUsuario:{
+    type:Schema.Types.ObjectId,
+    ref:'Usuario',
+    required:true
+    },
     detalleVisita:{
         type: String,
         minLength: 5,
