@@ -35,7 +35,7 @@ const pacienteSchema = new Schema({
         minLength: 5,
         maxLength: 50,
     },
-    mascota: {
+    mascotas: [{
         nombre: {
             type: String,
             minLength: 2,
@@ -54,15 +54,19 @@ const pacienteSchema = new Schema({
             maxLength: 50,
             required: true,
         },
-        historialMedico: {
-            type: [String], 
-            validate: {
-                validator: function (array) {
-                    return array.every((item) => typeof item === 'string');
-                },
+        historialMedico: [{
+            registro: {
+                type: String,
+                minLength: 10,
+                maxLength: 200
             },
-        },
-    },
+            fecha: {
+                type: String,
+                required: true,
+                maxLength: 50
+            },
+        }],
+    }],
 });
 
 pacienteSchema.set('toJSON', {
