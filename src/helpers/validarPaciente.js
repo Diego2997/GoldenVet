@@ -37,30 +37,29 @@ const validarPaciente = [
         .trim()
         .isLength({ min: 2, max: 50 })
         .withMessage('El nombre de la mascota debe tener entre 2 y 50 caracteres')
-        .notEmpty()
         .withMessage('El nombre de la mascota es requerido'),
     
     check('mascota.especie')
         .trim()
         .isLength({ min: 2, max: 50 })
         .withMessage('La especie de la mascota debe tener entre 2 y 50 caracteres')
-        .notEmpty()
         .withMessage('La especie de la mascota es requerida'),
 
     check('mascota.raza')
         .trim()
         .isLength({ min: 2, max: 50 })
         .withMessage('La raza de la mascota debe tener entre 2 y 50 caracteres')
-        .notEmpty()
         .withMessage('La raza de la mascota es requerida'),
 
-    check('mascota.historialMedico')
-        .isArray()
-        .withMessage('El historial médico debe ser un array')
-        .custom((value) => {
-            return value.every((item) => typeof item === 'string');
-        })
-        .withMessage('El historial médico debe contener solo valores de tipo string'),
+    check('mascota.historialMedico.registro')
+        .trim()
+        .isLength({ min: 10, max: 200 })
+        .withMessage('El historial de la mascota debe tener entre 10 y 200 caracteres'),
+    
+    check('mascota.historialMedico.fecha')
+        .trim()
+        .isLength({ min: 10, max: 50 })
+        .withMessage('La fecha de la mascota debe tener entre 10 y 50 caracteres'),    
     
     (req, res, next)=>{ resultadoValidacion(req, res, next) }
 ];
