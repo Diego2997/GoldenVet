@@ -37,12 +37,20 @@ const servicioSchema = new Schema({
     },
   }],
 });
+function transformSubservicio(documento, returnedObject) {
+  returnedObject.id = returnedObject._id;
+  delete returnedObject._id;
+  returnedObject
 
+}
 servicioSchema.set('toJSON', {
   transform: (documento, returnedObject) => {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
     delete returnedObject.__v;
+    if (Array.isArray(returnedObject.subservicios)) {
+      returnedObject.subservicios.forEach(subservicio => transformSubservicio(null, subservicio));
+    }
   },
 });
 
