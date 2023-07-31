@@ -13,7 +13,7 @@ const router = Router();
 
 router.route('/pacientes')
     .get(obtenerPacientes)
-    .post([validarJWT, validarPaciente], crearPaciente);
+    .post(validarPaciente, crearPaciente);
     
 router.route('/pacientes/:id')
     .get(obtenerPaciente)

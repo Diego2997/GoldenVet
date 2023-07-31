@@ -11,6 +11,9 @@ import validarUSuario from "../helpers/validarUsuario";
 import validarJWT from "../helpers/verificarToken-jwt";
 import { validarRolAdministrador } from "../helpers/validarRolAdministrador";
 import { validarUsuarioLogueado } from "../helpers/validarUsuarioLogueado";
+import validarLogin from "../helpers/validarLogin";
+
+
 const router = Router();
 
 router
@@ -24,5 +27,5 @@ router
   .put(validarJWT, validarUsuarioLogueado, validarUSuario, editarUsuario)
   .delete(validarJWT, validarUsuarioLogueado, eliminarUsuario);
 
-router.post('/', login);
+router.route('/').post(validarLogin, login);
 export default router;
