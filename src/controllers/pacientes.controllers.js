@@ -26,7 +26,8 @@ export const obtenerPaciente = async (req, res) => {
 
 export const crearPaciente = async (req, res) => {
     try {
-        const pacienteNuevo = new Paciente(req.body);
+        const mascotas = [req.body.mascota];
+        const pacienteNuevo = new Paciente({ ...req.body, mascotas });
         await pacienteNuevo.save();
         res.status(201).json({
             mensaje: "El paciente se creó correctamente"
