@@ -18,13 +18,6 @@ const pacienteSchema = new Schema({
         maxLength: 20,
         required: true,
     },
-    email: {
-        type: String,
-        minLength: 15,
-        maxLength: 50,
-        required: true,
-        unique: true,
-    },
     telefono: {
         type: String,
         minLength: 7,
