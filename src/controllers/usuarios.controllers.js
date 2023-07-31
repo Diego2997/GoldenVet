@@ -28,8 +28,14 @@ export const obtenerUsuario = async (req, res) => {
 
 export const crearUsuario = async (req, res) => {
   try {
-    const nombreUsuario = req.body.nombreUsuario;
-    const email = req.body.email;
+    const { nombreUsuario, email, rol } = req.body;
+    const esAdministrador = req.rol === 'administrador';
+
+    if ((!esAdministrador && rol === 'administrador')) {
+      return res.status(403).json({
+        mensaje: 'Acceso denegado. Solo los administradores pueden realizar esta acción.',
+      });
+    }
 
     const errores = await validarExistenciaUsuarioEmail(nombreUsuario, email);
     if (errores) {
@@ -43,6 +49,7 @@ export const crearUsuario = async (req, res) => {
         mensaje: "El usuario fué creado.",
       });
     }
+
   } catch (error) {
     console.log(error);
     res.status(404).json({
@@ -60,8 +67,12 @@ export const editarUsuario = async (req, res) => {
       });
     }
 
-    const nombreUsuario = req.body.nombreUsuario;
-    const email = req.body.email;
+    const { nombreUsuario, email, password } = req.body;
+
+    if (password) {
+      const salt = bcrypt.genSaltSync();
+      req.body.password = bcrypt.hashSync(password, salt);
+    }
 
     const errores = await validarExistenciaUsuarioEmail(nombreUsuario, email);
     if (errores) {
@@ -119,13 +130,13 @@ export const login = async(req, res) =>{
             mensaje: 'Correo o contraseña no validos'
         })
     }
-    const token = await generarJWT(usuario.email, usuario.nombreUsuario);
+    const token = await generarJWT(usuario.id, usuario.email, usuario.nombreUsuario, usuario.rol);
     res.status(200).json({
         mensaje:'Usuario logeado',
         nombreUsuario: usuario.nombreUsuario,
         email: usuario.email,
         rol :usuario.rol,
-        uid: usuario.id,
+        id: usuario.id,
         token
     })
 } catch (error) {
