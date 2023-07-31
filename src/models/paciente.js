@@ -1,6 +1,11 @@
 import { Schema, model } from 'mongoose';
 
 const pacienteSchema = new Schema({
+    idUsuario:{
+        type:Schema.Types.ObjectId,
+        ref:'Usuario',
+        required:true
+        },
     nombreDuenio: {
         type: String,
         minLength: 2,
