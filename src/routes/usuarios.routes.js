@@ -9,6 +9,8 @@ import {
 } from "../controllers/usuarios.controllers";
 import validarUSuario from "../helpers/validarUsuario";
 import validarJWT from "../helpers/verificarToken-jwt";
+import validarLogin from "../helpers/validarLogin";
+
 const router = Router();
 
 router
@@ -22,5 +24,5 @@ router
   .put([validarJWT, validarUSuario], editarUsuario)
   .delete(validarJWT, eliminarUsuario);
 
-router.post('/', login);
+router.route('/').post(validarLogin, login);
 export default router;
