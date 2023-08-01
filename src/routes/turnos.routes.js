@@ -8,11 +8,12 @@ import {
      from "../controllers/turnos.controllers";
 import { validacionTurno } from "../helpers/validacionTurnos";
 import validarJWT from "../helpers/verificarToken-jwt";
+import { validarUsuarioLogueado } from "../helpers/validarUsuarioLogueado";
 
 const turnosRuta = Router();
 
 turnosRuta.route('/turnos')
-    .get(obtenerTurnos)
+    .get(validarJWT, obtenerTurnos)
     .post([validarJWT, validacionTurno],crearTurno);
 
 turnosRuta.route('/turnos/:id')

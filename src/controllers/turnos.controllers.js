@@ -2,7 +2,17 @@ import Turno from "../models/turno";
 
 export const obtenerTurnos = async (req, res) => {
     try {
-        const turnos = await Turno.find();
+        let turnos;
+
+        if (req.rol === "administrador") {
+            turnos = await Turno.find();
+        }
+        console.log(req.id);
+        if (req.rol === "usuario") {
+            turnos = await Turno.find({ idUsuario: req.id });
+            console.log(turnos);
+        }
+        
         res.status(200).json(turnos);
     } catch (error) {
         console.log(error);
