@@ -1,8 +1,16 @@
 import Paciente from "../models/paciente";
 
 export const obtenerPacientes = async (req, res) => {
+    console.log(req.rol);
     try {
-        const pacientes = await Paciente.find();
+        let pacientes;
+
+        if (req.rol === "administrador") {
+            pacientes = await Paciente.find();
+        }
+        if (req.rol === "usuario") {
+            pacientes = await Paciente.find({ idUsuario: req.id });
+        }
         res.status(200).json(pacientes);
     } catch (error) {
         console.log(error)
@@ -14,16 +22,8 @@ export const obtenerPacientes = async (req, res) => {
 
 export const obtenerPaciente = async (req, res) => {
     try {
-        let pacientes;
-
-        if (req.rol === "administrador") {
-            pacientes = await Turno.find();
-        }
-        console.log(req.id);
-        if (req.rol === "usuario") {
-            pacientes = await Paciente.find({ idUsuario: req.id });
-            console.log(pacientes);
-        }
+        const { id } = req.params;
+        const paciente = await Paciente.findById(id);
         res.status(200).json(paciente);
     } catch (error) {
         console.log(error)

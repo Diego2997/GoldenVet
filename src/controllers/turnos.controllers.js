@@ -7,10 +7,8 @@ export const obtenerTurnos = async (req, res) => {
         if (req.rol === "administrador") {
             turnos = await Turno.find();
         }
-        console.log(req.id);
         if (req.rol === "usuario") {
             turnos = await Turno.find({ idUsuario: req.id });
-            console.log(turnos);
         }
         
         res.status(200).json(turnos);

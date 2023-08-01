@@ -12,7 +12,7 @@ import validarJWT from "../helpers/verificarToken-jwt";
 const router = Router();
 
 router.route('/pacientes')
-    .get(obtenerPacientes)
+    .get(validarJWT, obtenerPacientes)
     .post(validarPaciente, crearPaciente);
     
 router.route('/pacientes/:id')
