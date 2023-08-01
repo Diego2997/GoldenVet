@@ -14,7 +14,16 @@ export const obtenerPacientes = async (req, res) => {
 
 export const obtenerPaciente = async (req, res) => {
     try {
-        const paciente = await Paciente.findById(req.params.id);
+        let pacientes;
+
+        if (req.rol === "administrador") {
+            pacientes = await Turno.find();
+        }
+        console.log(req.id);
+        if (req.rol === "usuario") {
+            pacientes = await Paciente.find({ idUsuario: req.id });
+            console.log(pacientes);
+        }
         res.status(200).json(paciente);
     } catch (error) {
         console.log(error)
