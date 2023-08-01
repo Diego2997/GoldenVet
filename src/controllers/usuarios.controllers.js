@@ -58,6 +58,7 @@ export const crearUsuario = async (req, res) => {
   }
 };
 
+// ...
 export const editarUsuario = async (req, res) => {
   try {
     const usuarioExistente = await Usuario.findById(req.params.id);
@@ -74,25 +75,32 @@ export const editarUsuario = async (req, res) => {
       req.body.password = bcrypt.hashSync(password, salt);
     }
 
-    const errores = await validarExistenciaUsuarioEmail(nombreUsuario, email);
-    if (errores) {
-      if (
-        usuarioExistente.nombreUsuario === nombreUsuario &&
-        usuarioExistente.email === email
-      ) {
-        await Usuario.findByIdAndUpdate(req.params.id, req.body);
-        return res.status(200).json({
-          mensaje: "El usuario se actualizó correctamente.",
+    // Verificar si se quiere cambiar el correo electrónico o el nombre de usuario
+    if (nombreUsuario !== usuarioExistente.nombreUsuario) {
+      // Se quiere cambiar el nombre de usuario, validar existencia
+      const nombreUsuarioExistente = await Usuario.findOne({ nombreUsuario });
+      if (nombreUsuarioExistente) {
+        return res.status(400).json({
+          mensaje: "Este nombre de usuario ya está en uso.",
         });
-      } else {
-        return res.status(400).json({ mensaje: errores });
       }
-    } else {
-      await Usuario.findByIdAndUpdate(req.params.id, req.body);
-      res.status(200).json({
-        mensaje: "El usuario se actualizó correctamente.",
-      });
     }
+
+    if (email !== usuarioExistente.email) {
+      // Se quiere cambiar el correo electrónico, validar existencia
+      const emailExistente = await Usuario.findOne({ email });
+      if (emailExistente) {
+        return res.status(400).json({
+          mensaje: "Este correo electrónico ya está en uso.",
+        });
+      }
+    }
+
+    // Actualizar el usuario
+    await Usuario.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({
+      mensaje: "El usuario se actualizó correctamente.",
+    });
   } catch (error) {
     console.log(error);
     res.status(404).json({
@@ -100,6 +108,8 @@ export const editarUsuario = async (req, res) => {
     });
   }
 };
+// ...
+
 
 export const eliminarUsuario = async (req, res) => {
   try {
