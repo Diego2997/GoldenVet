@@ -1,4 +1,4 @@
-import { check } from "express-validator";
+import { check, body } from "express-validator";
 import resultadoValidacion from "./resultadoValidacion";
 
 const validarPaciente = [
@@ -24,40 +24,46 @@ const validarPaciente = [
         .isLength({ min: 5, max: 50 })
         .withMessage("La dirección del dueño debe que tener entre 5 y 50 caracteres"),
 
-    (req, res, next) => {
-        console.log(req.body);
-        if (req.body.mascota) {
-            check('mascota.nombre')
-                .trim()
-                .isLength({ min: 2, max: 50 })
-                .withMessage('El nombre de la mascota debe tener entre 2 y 50 caracteres');
+        body("mascota.nombre")
+        .if((value, { req }) => req.body.mascota) // Realizar validación solo si existe la propiedad "mascota" en req.body
+        .trim()
+        .isLength({ min: 2, max: 50 })
+        .withMessage("El nombre de la mascota debe tener entre 2 y 50 caracteres")
+        .notEmpty()
+        .withMessage("El nombre de la mascota es requerida"),
 
-            check('mascota.especie')
-                .trim()
-                .isLength({ min: 2, max: 50 })
-                .withMessage('La especie de la mascota debe tener entre 2 y 50 caracteres');
+    body("mascota.especie")
+        .if((value, { req }) => req.body.mascota)
+        .trim()
+        .isLength({ min: 2, max: 50 })
+        .withMessage("La especie de la mascota debe tener entre 2 y 50 caracteres")
+        .notEmpty()
+        .withMessage("La especie de la mascota es requerida"),
 
-            check('mascota.raza')
-                .trim()
-                .isLength({ min: 2, max: 50 })
-                .withMessage('La raza de la mascota debe tener entre 2 y 50 caracteres')
-                .withMessage('La raza de la mascota es requerida');
+    body("mascota.raza")
+        .if((value, { req }) => req.body.mascota)
+        .trim()
+        .isLength({ min: 2, max: 50 })
+        .withMessage("La raza de la mascota debe tener entre 2 y 50 caracteres")
+        .notEmpty()
+        .withMessage("La raza de la mascota es requerida"),
 
-            if (req.body.mascota.historialMedico) {
-                check('mascota.historialMedico.registro')
-                    .trim()
-                    .isLength({ min: 10, max: 200 })
-                    .withMessage('El historial de la mascota debe tener entre 10 y 200 caracteres');
+    body("mascota.historialMedico.registro")
+        .if((value, { req }) => req.body.mascota && req.body.mascota.historialMedico)
+        .trim()
+        .isLength({ min: 10, max: 200 })
+        .withMessage("El historial de la mascota debe tener entre 10 y 200 caracteres")
+        .notEmpty()
+        .withMessage("El historial de la mascota es requerida"),
 
-                check('mascota.historialMedico.fecha')
-                    .trim()
-                    .isLength({ min: 10, max: 50 })
-                    .withMessage('La fecha del historial médico debe tener entre 10 y 50 caracteres');
-            }
-        }
-
-        next();
-    },
+    body("mascota.historialMedico.fecha")
+        .if((value, { req }) => req.body.mascota && req.body.mascota.historialMedico)
+        .trim()
+        .isLength({ min: 10, max: 50 })
+        .withMessage("La fecha del historial médico debe tener entre 10 y 50 caracteres")
+        .notEmpty()
+        .withMessage("La fecha del historial médico es requerida"),
+    
     (req, res, next) => { resultadoValidacion(req, res, next) }
 ];
 
