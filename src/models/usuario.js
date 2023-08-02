@@ -30,6 +30,10 @@ const usuarioSchema = new Schema({
     type: String,
     required: true,
   },
+  paciente: {
+    type: Schema.Types.ObjectId,
+    ref: "Paciente",
+  },
 });
 
 usuarioSchema.set('toJSON', {

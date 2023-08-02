@@ -56,7 +56,13 @@ export const crearPaciente = async (req, res) => {
             mascotas,
         });
 
-        await pacienteNuevo.save();
+        const pacienteGuardado = await pacienteNuevo.save();
+        const pacienteId = pacienteGuardado._id;
+
+        const usuario = await Usuario.findOne({ _id: idUsuario });
+        usuario.paciente = pacienteId;
+        await usuario.save();
+
         res.status(201).json({
             mensaje: "El paciente se creó correctamente"
         });
@@ -70,7 +76,7 @@ export const crearPaciente = async (req, res) => {
 
 export const editarPaciente = async (req, res) => {
     try {
-        const { idUsuario, nombreDuenio, apellido, telefono, direccion, mascota } = req.body;
+        const { nombreDuenio, apellido, telefono, direccion, mascota } = req.body;
         const { historialMedico } = mascota || {};
         const pacienteExistente = await Paciente.findById(req.params.id);
 
@@ -80,7 +86,6 @@ export const editarPaciente = async (req, res) => {
             });
         }
 
-        pacienteExistente.idUsuario = idUsuario || pacienteExistente.idUsuario;
         pacienteExistente.nombreDuenio = nombreDuenio || pacienteExistente.nombreDuenio;
         pacienteExistente.apellido = apellido || pacienteExistente.apellido;
         pacienteExistente.telefono = telefono || pacienteExistente.telefono;

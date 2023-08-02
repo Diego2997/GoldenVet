@@ -12,6 +12,7 @@ import validarJWT from "../helpers/verificarToken-jwt";
 import { validarRolAdministrador } from "../helpers/validarRolAdministrador";
 import { validarUsuarioLogueado } from "../helpers/validarUsuarioLogueado";
 import validarLogin from "../helpers/validarLogin";
+import validarJWTcrearUsuario from "../helpers/validarToken-crearUsuario";
 
 
 const router = Router();
@@ -19,7 +20,7 @@ const router = Router();
 router
   .route("/usuarios")
   .get(validarJWT, validarRolAdministrador, obtenerUsuarios)
-  .post(validarUSuario, crearUsuario);
+  .post([validarJWTcrearUsuario, validarUSuario], crearUsuario);
 
 router
   .route("/usuarios/:id")
