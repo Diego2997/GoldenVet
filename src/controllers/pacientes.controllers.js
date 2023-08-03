@@ -4,14 +4,7 @@ import Usuario from "../models/usuario";
 export const obtenerPacientes = async (req, res) => {
     console.log(req.rol);
     try {
-        let pacientes;
-
-        if (req.rol === "administrador") {
-            pacientes = await Paciente.find();
-        }
-        if (req.rol === "usuario") {
-            pacientes = await Paciente.find({ idUsuario: req.id });
-        }
+        const pacientes = await Paciente.find();
         res.status(200).json(pacientes);
     } catch (error) {
         console.log(error)
