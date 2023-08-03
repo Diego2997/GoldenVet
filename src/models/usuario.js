@@ -1,3 +1,4 @@
+import Paciente from "./paciente";
 import { Schema, model } from "mongoose";
 
 const usuarioSchema = new Schema({
@@ -32,7 +33,7 @@ const usuarioSchema = new Schema({
   },
   paciente: {
     type: Schema.Types.ObjectId,
-    ref: "Paciente",
+    ref: "paciente",
   },
 });
 

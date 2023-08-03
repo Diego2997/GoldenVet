@@ -2,18 +2,6 @@ import generarJWT from "../helpers/firmaToken-jwt";
 import Usuario from "../models/usuario";
 import bcrypt from 'bcrypt';
 
-// export const obtenerUsuarios = async (req, res) => {
-//   try {
-//     const usuarios = await Usuario.find();
-//     res.status(200).json(usuarios);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(404).json({
-//       mensaje: "Error al obtener usuarios.",
-//     });
-//   }
-// };
-
 export const obtenerUsuarios = async (req, res) => {
   try {
     const usuarios = await Usuario.find().populate('paciente');
@@ -26,7 +14,7 @@ export const obtenerUsuarios = async (req, res) => {
 
 export const obtenerUsuario = async (req, res) => {
   try {
-    const usuario = await Usuario.findById(req.params.id);
+    const usuario = await Usuario.findById(req.params.id).populate('paciente');
     res.status(200).json(usuario);
   } catch (error) {
     console.log(error);
