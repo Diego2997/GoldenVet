@@ -17,6 +17,9 @@ export const obtenerPaciente = async (req, res) => {
     try {
         const { id } = req.params;
         const paciente = await Paciente.findById(id);
+
+        propiedadUsuario(paciente.idUsuario, req);
+
         res.status(200).json(paciente);
     } catch (error) {
         console.log(error)
@@ -79,7 +82,7 @@ export const editarPaciente = async (req, res) => {
             });
         }
 
-        propiedadUsuario(pacienteExistente.idUsuario, req.id);
+        propiedadUsuario(pacienteExistente.idUsuario, req);
 
         pacienteExistente.nombreDuenio = nombreDuenio || pacienteExistente.nombreDuenio;
         pacienteExistente.apellido = apellido || pacienteExistente.apellido;
@@ -140,8 +143,8 @@ export const eliminarPaciente = async (req, res) => {
     }
 }
 
-function propiedadUsuario(idUsuario, id){
-    if (idUsuario != id) {
+function propiedadUsuario(idUsuario, req){
+    if (req.rol !== "administrador" && idUsuario != req.id) {
         return res.status(403).json({
             mensaje: "No tiene permiso para realizar esta acción"
         });

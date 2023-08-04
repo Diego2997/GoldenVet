@@ -42,7 +42,7 @@ export const obtenerTurno = async (req, res) => {
     try {
         const turno = await Turno.findById(req.params.id);
 
-        propiedadUsuario(turno.idUsuario, req.id);
+        propiedadUsuario(turno.idUsuario, req);
 
         res.status(200).json(turno);
     } catch (error) {
@@ -58,7 +58,7 @@ export const modificarTurno = async (req, res) => {
 
         const turnoExistente = await Turno.findById(turnoId);
 
-        propiedadUsuario(turnoExistente.idUsuario, req.id);
+        propiedadUsuario(turnoExistente.idUsuario, req);
 
         const fechaYHoraExistente = turnoExistente.fechaYHora;
 
@@ -91,7 +91,9 @@ export const eliminarTurno = async (req, res) => {
             });
         }
 
-        propiedadUsuario(turnoExistente.idUsuario, req.id);
+        propiedadUsuario(turnoExistente.idUsuario, req);
+
+        await Turno.findByIdAndDelete(req.params.id);
 
         res.status(200).json({mensaje: 'Se logro eliminar el turno'});
     } catch (error) {
@@ -100,8 +102,8 @@ export const eliminarTurno = async (req, res) => {
     }
 };
 
-function propiedadUsuario(idUsuario, id){
-    if (idUsuario != id) {
+function propiedadUsuario(idUsuario, req){
+    if (req.rol !== "administrador" && idUsuario != req.id) {
         return res.status(403).json({
             mensaje: "No tiene permiso para realizar esta acción"
         });
