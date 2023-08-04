@@ -18,8 +18,8 @@ router.route('/pacientes')
     .post(validarJWT, validarPaciente, crearPaciente);
     
 router.route('/pacientes/:id')
-    .get([validarJWT, validarUsuarioLogueado], obtenerPaciente)
-    .put([validarJWT, validarUsuarioLogueado, validarPaciente], editarPaciente)
-    .delete([validarJWT, validarUsuarioLogueado], eliminarPaciente);
+    .get([validarJWT], obtenerPaciente)
+    .put([validarJWT, validarPaciente], editarPaciente)
+    .delete([validarJWT], eliminarPaciente);
 
 export default router;

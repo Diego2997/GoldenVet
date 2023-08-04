@@ -79,6 +79,8 @@ export const editarPaciente = async (req, res) => {
             });
         }
 
+        propiedadUsuario(pacienteExistente.idUsuario, req.id);
+
         pacienteExistente.nombreDuenio = nombreDuenio || pacienteExistente.nombreDuenio;
         pacienteExistente.apellido = apellido || pacienteExistente.apellido;
         pacienteExistente.telefono = telefono || pacienteExistente.telefono;
@@ -116,6 +118,16 @@ export const editarPaciente = async (req, res) => {
 
 export const eliminarPaciente = async (req, res) => {
     try {
+        const pacienteExistente = await Paciente.findById(req.params.id);
+
+        if (!pacienteExistente) {
+            return res.status(404).json({
+                mensaje: "No se encontró el paciente a borrar"
+            });
+        }
+
+        propiedadUsuario(pacienteExistente.idUsuario, req.id);
+
         await Paciente.findByIdAndDelete(req.params.id);
         res.status(200).json({
             mensaje: "El paciente se eliminó correctamente"
@@ -124,6 +136,14 @@ export const eliminarPaciente = async (req, res) => {
         console.log(error)
         res.status(404).json({
             mensaje: "Error al eliminar el paciente"
+        });
+    }
+}
+
+function propiedadUsuario(idUsuario, id){
+    if (idUsuario != id) {
+        return res.status(403).json({
+            mensaje: "No tiene permiso para realizar esta acción"
         });
     }
 }
