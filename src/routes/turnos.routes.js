@@ -8,8 +8,6 @@ import {
      from "../controllers/turnos.controllers";
 import { validacionTurno } from "../helpers/validacionTurnos";
 import validarJWT from "../helpers/verificarToken-jwt";
-import { validarUsuarioLogueado } from "../helpers/validarUsuarioLogueado";
-import { validarRolAdministrador } from "../helpers/validarRolAdministrador";
 
 const turnosRuta = Router();
 
@@ -18,8 +16,8 @@ turnosRuta.route('/turnos')
     .post([validarJWT, validacionTurno],crearTurno);
 
 turnosRuta.route('/turnos/:id')
-    .get([validarJWT, validarUsuarioLogueado],obtenerTurno)
+    .get(validarJWT,obtenerTurno)
     .put([validarJWT, validacionTurno],modificarTurno)
-    .delete([validarJWT, validarUsuarioLogueado], eliminarTurno);
+    .delete(validarJWT, eliminarTurno);
 
 export default turnosRuta;
