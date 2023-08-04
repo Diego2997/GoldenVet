@@ -15,7 +15,7 @@ const router = Router();
 
 router.route('/pacientes')
     .get([validarJWT, validarRolAdministrador], obtenerPacientes)
-    .post([validarJWT, validarUsuarioLogueado, validarPaciente], crearPaciente);
+    .post(validarJWT, validarPaciente, crearPaciente);
     
 router.route('/pacientes/:id')
     .get([validarJWT, validarUsuarioLogueado], obtenerPaciente)

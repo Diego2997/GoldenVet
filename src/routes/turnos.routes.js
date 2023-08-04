@@ -14,7 +14,7 @@ import { validarRolAdministrador } from "../helpers/validarRolAdministrador";
 const turnosRuta = Router();
 
 turnosRuta.route('/turnos')
-    .get([validarJWT, validarRolAdministrador], obtenerTurnos)
+    .get([validarJWT], obtenerTurnos)
     .post([validarJWT, validacionTurno],crearTurno);
 
 turnosRuta.route('/turnos/:id')
