@@ -2,7 +2,6 @@ import Paciente from "../models/paciente";
 import Usuario from "../models/usuario";
 
 export const obtenerPacientes = async (req, res) => {
-    console.log(req.rol);
     try {
         const pacientes = await Paciente.find();
         res.status(200).json(pacientes);
@@ -32,7 +31,7 @@ export const crearPaciente = async (req, res) => {
         const { idUsuario, nombreDuenio, apellido, telefono, direccion, mascota } = req.body;
 
         const pacienteExistente = await Paciente.findOne({ idUsuario });
-        console.log(pacienteExistente)
+
         if (pacienteExistente) {
             return res.status(400).json({
                 mensaje: "El usuario ya tiene un paciente asociado"
