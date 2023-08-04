@@ -24,7 +24,7 @@ const validarPaciente = [
         .isLength({ min: 5, max: 50 })
         .withMessage("La dirección del dueño debe que tener entre 5 y 50 caracteres"),
 
-        body("mascota.nombre")
+    body("mascota.nombre")
         .if((value, { req }) => req.body.mascota) // Realizar validación solo si existe la propiedad "mascota" en req.body
         .trim()
         .isLength({ min: 2, max: 50 })

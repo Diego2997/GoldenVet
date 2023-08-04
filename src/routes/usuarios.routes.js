@@ -19,14 +19,14 @@ const router = Router();
 
 router
   .route("/usuarios")
-  .get(validarJWT, validarRolAdministrador, obtenerUsuarios)
-  .post(validarJWTcrearUsuario, validarUSuario, crearUsuario);
+  .get([validarJWT, validarRolAdministrador], obtenerUsuarios)
+  .post([validarJWTcrearUsuario, validarUSuario], crearUsuario);
 
 router
   .route("/usuarios/:id")
-  .get(validarJWT, validarUsuarioLogueado, obtenerUsuario)
-  .put(validarJWT, validarUsuarioLogueado, validarUSuario, editarUsuario)
-  .delete(validarJWT, validarUsuarioLogueado, eliminarUsuario);
+  .get([validarJWT, validarUsuarioLogueado], obtenerUsuario)
+  .put([validarJWT, validarUsuarioLogueado], validarUSuario, editarUsuario)
+  .delete([validarJWT, validarUsuarioLogueado], eliminarUsuario);
 
 router.route('/').post(validarLogin, login);
 export default router;

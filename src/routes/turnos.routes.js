@@ -9,16 +9,17 @@ import {
 import { validacionTurno } from "../helpers/validacionTurnos";
 import validarJWT from "../helpers/verificarToken-jwt";
 import { validarUsuarioLogueado } from "../helpers/validarUsuarioLogueado";
+import { validarRolAdministrador } from "../helpers/validarRolAdministrador";
 
 const turnosRuta = Router();
 
 turnosRuta.route('/turnos')
-    .get(validarJWT, obtenerTurnos)
+    .get([validarJWT, validarRolAdministrador], obtenerTurnos)
     .post([validarJWT, validacionTurno],crearTurno);
 
 turnosRuta.route('/turnos/:id')
-    .get(obtenerTurno)
+    .get([validarJWT, validarUsuarioLogueado],obtenerTurno)
     .put([validarJWT, validacionTurno],modificarTurno)
-    .delete(validarJWT, eliminarTurno);
+    .delete([validarJWT, validarUsuarioLogueado], eliminarTurno);
 
 export default turnosRuta;
