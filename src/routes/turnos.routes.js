@@ -16,7 +16,7 @@ turnosRuta.route('/turnos')
     .post([validarJWT, validacionTurno],crearTurno);
 
 turnosRuta.route('/turnos/:id')
-    .get(validarJWT,obtenerTurno)
+    .get(validarJWT, obtenerTurno)
     .put([validarJWT, validacionTurno],modificarTurno)
     .delete(validarJWT, eliminarTurno);
 

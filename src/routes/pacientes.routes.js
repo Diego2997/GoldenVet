@@ -9,17 +9,16 @@ import {
 import validarPaciente from "../helpers/validarPaciente";
 import validarJWT from "../helpers/verificarToken-jwt";
 import { validarRolAdministrador } from "../helpers/validarRolAdministrador";
-import { validarUsuarioLogueado } from "../helpers/validarUsuarioLogueado";
 
 const router = Router();
 
 router.route('/pacientes')
     .get([validarJWT, validarRolAdministrador], obtenerPacientes)
-    .post(validarJWT, validarPaciente, crearPaciente);
+    .post([validarJWT, validarPaciente], crearPaciente);
     
 router.route('/pacientes/:id')
-    .get([validarJWT], obtenerPaciente)
+    .get(validarJWT, obtenerPaciente)
     .put([validarJWT, validarPaciente], editarPaciente)
-    .delete([validarJWT], eliminarPaciente);
+    .delete(validarJWT, eliminarPaciente);
 
 export default router;
