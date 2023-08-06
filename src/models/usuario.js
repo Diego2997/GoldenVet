@@ -18,7 +18,7 @@ const usuarioSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    minLength: 15,
+    minLength: 7,
     maxLength: 50,
     validate: {
       validator: function (value) {
