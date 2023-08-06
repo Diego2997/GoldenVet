@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 const validarJWTcrearUsuario = (req, res, next) => {
     const token = req.header('x-token');
     console.log(token);
-    if (!token) {
+    if (token == undefined) {
         next();
     }
     try {
