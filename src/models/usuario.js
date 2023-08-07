@@ -1,3 +1,4 @@
+import Paciente from "./paciente";
 import { Schema, model } from "mongoose";
 
 const usuarioSchema = new Schema({
@@ -17,7 +18,7 @@ const usuarioSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    minLength: 15,
+    minLength: 7,
     maxLength: 50,
     validate: {
       validator: function (value) {
@@ -29,6 +30,10 @@ const usuarioSchema = new Schema({
   rol: {
     type: String,
     required: true,
+  },
+  paciente: {
+    type: Schema.Types.ObjectId,
+    ref: "paciente",
   },
 });
 

@@ -2,7 +2,15 @@ import Turno from "../models/turno";
 
 export const obtenerTurnos = async (req, res) => {
     try {
-        const turnos = await Turno.find();
+        let turnos;
+
+        if (req.rol === "administrador") {
+            turnos = await Turno.find();
+        }
+        if (req.rol === "usuario") {
+            turnos = await Turno.find({ idUsuario: req.id });
+        }
+        
         res.status(200).json(turnos);
     } catch (error) {
         console.log(error);
@@ -33,6 +41,9 @@ export const crearTurno = async (req, res) => {
 export const obtenerTurno = async (req, res) => {
     try {
         const turno = await Turno.findById(req.params.id);
+
+        propiedadUsuario(turno.idUsuario, req);
+
         res.status(200).json(turno);
     } catch (error) {
         console.log(error);
@@ -46,6 +57,9 @@ export const modificarTurno = async (req, res) => {
         const turnoId = req.params.id;
 
         const turnoExistente = await Turno.findById(turnoId);
+
+        propiedadUsuario(turnoExistente.idUsuario, req);
+
         const fechaYHoraExistente = turnoExistente.fechaYHora;
 
         const validacionFechaYHora = fechaYHoraExistente.toString() !== fechaYHoraNueva.toString(); 
@@ -69,6 +83,16 @@ export const modificarTurno = async (req, res) => {
 
 export const eliminarTurno = async (req, res) => {
     try {
+        const turnoExistente = await Turno.findById(req.params.id);
+
+        if (!turnoExistente) {
+            return res.status(404).json({
+                mensaje: "No se encontró el turno a borrar"
+            });
+        }
+
+        propiedadUsuario(turnoExistente.idUsuario, req);
+
         await Turno.findByIdAndDelete(req.params.id);
 
         res.status(200).json({mensaje: 'Se logro eliminar el turno'});
@@ -77,3 +101,11 @@ export const eliminarTurno = async (req, res) => {
         res.status(404).json({mensaje: 'Error al eliminar el turno'});
     }
 };
+
+function propiedadUsuario(idUsuario, req){
+    if (req.rol !== "administrador" && idUsuario != req.id) {
+        return res.status(403).json({
+            mensaje: "No tiene permiso para realizar esta acción"
+        });
+    }
+}

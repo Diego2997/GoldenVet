@@ -12,11 +12,11 @@ import validarJWT from "../helpers/verificarToken-jwt";
 const turnosRuta = Router();
 
 turnosRuta.route('/turnos')
-    .get(obtenerTurnos)
+    .get([validarJWT], obtenerTurnos)
     .post([validarJWT, validacionTurno],crearTurno);
 
 turnosRuta.route('/turnos/:id')
-    .get(obtenerTurno)
+    .get(validarJWT, obtenerTurno)
     .put([validarJWT, validacionTurno],modificarTurno)
     .delete(validarJWT, eliminarTurno);
 
