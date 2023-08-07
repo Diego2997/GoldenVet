@@ -129,19 +129,23 @@ export const eliminarPaciente = async (req, res) => {
             });
         }
 
-        propiedadUsuario(pacienteExistente.idUsuario, req.id);
+        const usuario = await Usuario.findOne({ _id: pacienteExistente.idUsuario });
+        if (usuario) {
+            usuario.paciente = undefined;
+            await usuario.save();
+        }
 
         await Paciente.findByIdAndDelete(req.params.id);
         res.status(200).json({
             mensaje: "El paciente se eliminó correctamente"
         });
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(404).json({
             mensaje: "Error al eliminar el paciente"
         });
     }
-}
+};
 
 function propiedadUsuario(idUsuario, req){
     if (req.rol !== "administrador" && idUsuario != req.id) {
