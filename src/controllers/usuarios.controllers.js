@@ -58,7 +58,6 @@ export const crearUsuario = async (req, res) => {
   }
 };
 
-// ...
 export const editarUsuario = async (req, res) => {
   try {
     const usuarioExistente = await Usuario.findById(req.params.id);
@@ -75,9 +74,7 @@ export const editarUsuario = async (req, res) => {
       req.body.password = bcrypt.hashSync(password, salt);
     }
 
-    // Verificar si se quiere cambiar el correo electrónico o el nombre de usuario
     if (nombreUsuario !== usuarioExistente.nombreUsuario) {
-      // Se quiere cambiar el nombre de usuario, validar existencia
       const nombreUsuarioExistente = await Usuario.findOne({ nombreUsuario });
       if (nombreUsuarioExistente) {
         return res.status(400).json({
@@ -96,7 +93,6 @@ export const editarUsuario = async (req, res) => {
       }
     }
 
-    // Actualizar el usuario
     await Usuario.findByIdAndUpdate(req.params.id, req.body);
     res.status(200).json({
       mensaje: "El usuario se actualizó correctamente.",
@@ -108,7 +104,6 @@ export const editarUsuario = async (req, res) => {
     });
   }
 };
-// ...
 
 
 export const eliminarUsuario = async (req, res) => {
