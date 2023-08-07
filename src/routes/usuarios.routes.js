@@ -7,7 +7,7 @@ import {
   eliminarUsuario,
   login,
 } from "../controllers/usuarios.controllers";
-import validarUSuario from "../helpers/validarUsuario";
+import validarUsuario from "../helpers/validarUsuario";
 import validarJWT from "../helpers/verificarToken-jwt";
 import { validarRolAdministrador } from "../helpers/validarRolAdministrador";
 import { validarUsuarioLogueado } from "../helpers/validarUsuarioLogueado";
@@ -20,12 +20,12 @@ const router = Router();
 router
   .route("/usuarios")
   .get([validarJWT, validarRolAdministrador], obtenerUsuarios)
-  .post([validarJWTcrearUsuario, validarUSuario], crearUsuario);
+  .post([validarJWTcrearUsuario, validarUsuario], crearUsuario);
 
 router
   .route("/usuarios/:id")
   .get([validarJWT, validarUsuarioLogueado], obtenerUsuario)
-  .put([validarJWT, validarUsuarioLogueado], validarUSuario, editarUsuario)
+  .put([validarJWT, validarUsuarioLogueado], validarUsuario, editarUsuario)
   .delete([validarJWT, validarUsuarioLogueado], eliminarUsuario);
 
 router.route('/').post(validarLogin, login);
