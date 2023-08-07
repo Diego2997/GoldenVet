@@ -65,10 +65,10 @@ const validarPaciente = [
         .withMessage("La fecha del historial médico es requerida"),
     
     body("mascota.imagen")
-        .if((value, { req }) => req.body.mascota)
+        .if((value, { req }) => req.body.mascota && req.body.mascota.imagen)
         .trim()
-        .isLength({ min: 10, max: 100 })
-        .withMessage("La imagen de la mascota debe tener entre 10 y 50 caracteres")
+        .isLength({ min: 10, max: 300 })
+        .withMessage("La imagen de la mascota debe tener entre 10 y 300 caracteres")
         .default("https://img.freepik.com/vector-premium/diseno-logotipo-dibujos-animados-mascota-perro-lindo-estilo-diseno-plano_203040-109.jpg"),
     
     (req, res, next) => { resultadoValidacion(req, res, next) }

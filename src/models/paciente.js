@@ -63,7 +63,7 @@ const pacienteSchema = new Schema({
             type: String,
             default: "https://img.freepik.com/vector-premium/diseno-logotipo-dibujos-animados-mascota-perro-lindo-estilo-diseno-plano_203040-109.jpg",
             minLength: 10,
-            maxLength: 200
+            maxLength: 300
         }
     }],
 });
