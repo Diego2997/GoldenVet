@@ -25,7 +25,6 @@ export const obtenerunServicio = async (req, res) => {
 
 export const crearServicio = async (req, res) => {
     try {
-        // console.log(req.body);
         const serviciooNuevo = new Servicio(req.body);
         await serviciooNuevo.save();
         res.status(201).json({
@@ -41,7 +40,6 @@ export const crearServicio = async (req, res) => {
 
 export const borrarServicio = async (req, res) => {
     try {
-        console.log(req.params.id);
         await Servicio.findByIdAndDelete(req.params.id)
         res.status(200).json({
             mensaje: 'El servicio fue eliminado correctamente'

@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 const pacienteSchema = new Schema({
     idUsuario:{
         type:Schema.Types.ObjectId,
-        ref:'Usuario',
+        ref:'usuario',
         required:true
         },
     nombreDuenio: {
@@ -18,13 +18,6 @@ const pacienteSchema = new Schema({
         maxLength: 20,
         required: true,
     },
-    email: {
-        type: String,
-        minLength: 15,
-        maxLength: 50,
-        required: true,
-        unique: true,
-    },
     telefono: {
         type: String,
         minLength: 7,
@@ -35,7 +28,7 @@ const pacienteSchema = new Schema({
         minLength: 5,
         maxLength: 50,
     },
-    mascota: {
+    mascotas: [{
         nombre: {
             type: String,
             minLength: 2,
@@ -54,15 +47,25 @@ const pacienteSchema = new Schema({
             maxLength: 50,
             required: true,
         },
-        historialMedico: {
-            type: [String], 
-            validate: {
-                validator: function (array) {
-                    return array.every((item) => typeof item === 'string');
-                },
+        historialMedico: [{
+            registro: {
+                type: String,
+                minLength: 10,
+                maxLength: 200
             },
-        },
-    },
+            fecha: {
+                type: String,
+                required: true,
+                maxLength: 50
+            },
+        }],
+        imagen: {
+            type: String,
+            default: "https://img.freepik.com/vector-premium/diseno-logotipo-dibujos-animados-mascota-perro-lindo-estilo-diseno-plano_203040-109.jpg",
+            minLength: 10,
+            maxLength: 300
+        }
+    }],
 });
 
 pacienteSchema.set('toJSON', {

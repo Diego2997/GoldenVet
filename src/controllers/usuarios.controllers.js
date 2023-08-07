@@ -1,22 +1,20 @@
 import generarJWT from "../helpers/firmaToken-jwt";
 import Usuario from "../models/usuario";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 
 export const obtenerUsuarios = async (req, res) => {
   try {
-    const usuarios = await Usuario.find();
+    const usuarios = await Usuario.find().populate('paciente');
     res.status(200).json(usuarios);
   } catch (error) {
     console.log(error);
-    res.status(404).json({
-      mensaje: "Error al obtener usuarios.",
-    });
+    res.status(500).json({ mensaje: 'Error al obtener los usuarios.' });
   }
 };
 
 export const obtenerUsuario = async (req, res) => {
   try {
-    const usuario = await Usuario.findById(req.params.id);
+    const usuario = await Usuario.findById(req.params.id).populate('paciente');
     res.status(200).json(usuario);
   } catch (error) {
     console.log(error);
@@ -29,7 +27,7 @@ export const obtenerUsuario = async (req, res) => {
 export const crearUsuario = async (req, res) => {
   try {
     const { nombreUsuario, email, rol } = req.body;
-    const esAdministrador = req.rol === 'administrador';
+    const esAdministrador = req.rol == 'administrador';
 
     if ((!esAdministrador && rol === 'administrador')) {
       return res.status(403).json({
@@ -42,8 +40,8 @@ export const crearUsuario = async (req, res) => {
       return res.status(400).json({ mensaje: errores });
     } else {
       const usuarioNuevo = new Usuario(req.body);
-      const salt =  bcrypt.genSaltSync()
-      usuarioNuevo.password = bcrypt.hashSync(usuarioNuevo.password,salt)
+      const salt = bcrypt.genSaltSync()
+      usuarioNuevo.password = bcrypt.hashSync(usuarioNuevo.password, salt)
       await usuarioNuevo.save();
       res.status(201).json({
         mensaje: "El usuario fué creado.",
@@ -120,34 +118,34 @@ export const eliminarUsuario = async (req, res) => {
   }
 };
 
-export const login = async(req, res) =>{
+export const login = async (req, res) => {
   try {
-    const {email, password} = req.body;
-    let usuario = await Usuario.findOne({email});
-    if(!usuario){
-        return res.status(404).json({
-            mensaje: 'Correo o contraseña no validos'
-        })
+    const { email, password } = req.body;
+    let usuario = await Usuario.findOne({ email });
+    if (!usuario) {
+      return res.status(404).json({
+        mensaje: 'Correo o contraseña no validos'
+      })
     }
     const passwordValido = bcrypt.compareSync(password, usuario.password)
-    if(!passwordValido){
-        return res.status(400).json({
-            mensaje: 'Correo o contraseña no validos'
-        })
+    if (!passwordValido) {
+      return res.status(400).json({
+        mensaje: 'Correo o contraseña no validos'
+      })
     }
     const token = await generarJWT(usuario.id, usuario.email, usuario.nombreUsuario, usuario.rol);
     res.status(200).json({
-        mensaje:'Usuario logeado',
-        nombreUsuario: usuario.nombreUsuario,
-        email: usuario.email,
-        rol :usuario.rol,
-        id: usuario.id,
-        token
+      mensaje: 'Usuario logeado',
+      nombreUsuario: usuario.nombreUsuario,
+      email: usuario.email,
+      rol: usuario.rol,
+      id: usuario.id,
+      token
     })
-} catch (error) {
+  } catch (error) {
     console.log(error)
     res.status(404).json('Error al loguear un usuario');
-}
+  }
 }
 
 const validarExistenciaUsuarioEmail = async (nombreUsuario, email) => {

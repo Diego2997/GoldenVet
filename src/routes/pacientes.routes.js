@@ -8,15 +8,16 @@ import {
 } from "../controllers/pacientes.controllers";
 import validarPaciente from "../helpers/validarPaciente";
 import validarJWT from "../helpers/verificarToken-jwt";
+import { validarRolAdministrador } from "../helpers/validarRolAdministrador";
 
 const router = Router();
 
 router.route('/pacientes')
-    .get(obtenerPacientes)
-    .post(validarPaciente, crearPaciente);
+    .get([validarJWT, validarRolAdministrador], obtenerPacientes)
+    .post([validarJWT, validarPaciente], crearPaciente);
     
 router.route('/pacientes/:id')
-    .get(obtenerPaciente)
+    .get(validarJWT, obtenerPaciente)
     .put([validarJWT, validarPaciente], editarPaciente)
     .delete(validarJWT, eliminarPaciente);
 

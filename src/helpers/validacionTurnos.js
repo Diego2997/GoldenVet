@@ -16,6 +16,8 @@ export const validacionTurno = [
         .trim()
         .isLength({min: 3, max: 100})
         .withMessage("El nombre del veterinario debe de contener entre 3 y 50 caracteres")
+        .isIn(['Ezequiel',"Nahuel"])
+        .withMessage("Los veterinarios solamente son Ezequiel y Nahuel")
         .isAlpha('en-US', {ignore: '\s'})
         .withMessage("El nombre del veterinario debe contener solo letras y espacios"),
     check("paciente")
