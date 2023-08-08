@@ -51,8 +51,8 @@ const validarPaciente = [
     body("mascota.historialMedico.registro")
         .if((value, { req }) => req.body.mascota && req.body.mascota.historialMedico)
         .trim()
-        .isLength({ min: 10, max: 200 })
-        .withMessage("El historial de la mascota debe tener entre 10 y 200 caracteres")
+        .isLength({ min: 10, max: 500 })
+        .withMessage("El historial de la mascota debe tener entre 10 y 500 caracteres")
         .notEmpty()
         .withMessage("El historial de la mascota es requerida"),
 
