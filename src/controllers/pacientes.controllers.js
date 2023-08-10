@@ -89,7 +89,7 @@ export const editarPaciente = async (req, res) => {
         pacienteExistente.telefono = telefono || pacienteExistente.telefono;
         pacienteExistente.direccion = direccion || pacienteExistente.direccion;
         pacienteExistente.mascotas = mascotas || pacienteExistente.mascotas;
-        pacienteExistente.idUsuario = idUsuario || pacienteExistente.idUsuario;
+        pacienteExistente.idUsuario = pacienteExistente.idUsuario;
 
         if (mascota) {
             if (pacienteExistente.mascotas && pacienteExistente.mascotas.length > 0) {
