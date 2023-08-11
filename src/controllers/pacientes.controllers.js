@@ -72,7 +72,7 @@ export const crearPaciente = async (req, res) => {
 
 export const editarPaciente = async (req, res) => {
     try {
-        const { nombreDuenio, apellido, telefono, direccion, mascota } = req.body;
+        const { nombreDuenio, apellido, telefono, direccion, mascota, mascotas, idUsuario } = req.body;
         const { historialMedico } = mascota || {};
         const pacienteExistente = await Paciente.findById(req.params.id);
 
@@ -88,6 +88,8 @@ export const editarPaciente = async (req, res) => {
         pacienteExistente.apellido = apellido || pacienteExistente.apellido;
         pacienteExistente.telefono = telefono || pacienteExistente.telefono;
         pacienteExistente.direccion = direccion || pacienteExistente.direccion;
+        pacienteExistente.mascotas = mascotas || pacienteExistente.mascotas;
+        pacienteExistente.idUsuario = pacienteExistente.idUsuario;
 
         if (mascota) {
             if (pacienteExistente.mascotas && pacienteExistente.mascotas.length > 0) {
@@ -131,7 +133,7 @@ export const eliminarPaciente = async (req, res) => {
 
         const usuario = await Usuario.findOne({ _id: pacienteExistente.idUsuario });
         if (usuario) {
-            usuario.paciente = undefined;
+            delete usuario.paciente;
             await usuario.save();
         }
 
